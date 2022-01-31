@@ -96,22 +96,22 @@ async def close(callback: CallbackQuery):
 
 @dp.callback_query(re=r'mng-(add-group|add-to-group|remove-group|remove-from-group|back|list)')
 async def manager_call(callback: CallbackQuery):
-    match callback.data[4:]:
-        case 'add-group':
-            await callback.message.edit_text(ADD_GROUP_M, reply_markup=MANAGEMENT_BACK_KEYBOARD)
-        case 'add-to-group':
-            await callback.message.edit_text(ADD_TO_GROUP_M, reply_markup=MANAGEMENT_BACK_KEYBOARD)
-        case 'remove-group':
-            await callback.message.edit_text(REMOVE_GROUP_M,
-                                             reply_markup=create_groups_keyboard(callback.message, 'rm', 'back'))
-        case 'remove-from-group':
-            await callback.message.edit_text(REMOVE_FROM_GROUP_FIRST_M,
-                                             reply_markup=create_groups_keyboard(callback.message, 'rmf', 'back'))
-        case 'list':
-            await callback.message.edit_text(LIST_GROUP_MEMBERS_FIRST_M,
-                                             reply_markup=create_groups_keyboard(callback.message, 'ls', 'back'))
-        case 'back':
-            await callback.message.edit_text(MANAGEMENT, reply_markup=MANAGEMENT_KEYBOARD)
+    cb_data = callback.data[4:]
+    if cb_data == 'add-group':
+        await callback.message.edit_text(ADD_GROUP_M, reply_markup=MANAGEMENT_BACK_KEYBOARD)
+    if cb_data == 'add-to-group':
+        await callback.message.edit_text(ADD_TO_GROUP_M, reply_markup=MANAGEMENT_BACK_KEYBOARD)
+    if cb_data == 'remove-group':
+        await callback.message.edit_text(REMOVE_GROUP_M,
+                                         reply_markup=create_groups_keyboard(callback.message, 'rm', 'back'))
+    if cb_data == 'remove-from-group':
+        await callback.message.edit_text(REMOVE_FROM_GROUP_FIRST_M,
+                                         reply_markup=create_groups_keyboard(callback.message, 'rmf', 'back'))
+    if cb_data == 'list':
+        await callback.message.edit_text(LIST_GROUP_MEMBERS_FIRST_M,
+                                         reply_markup=create_groups_keyboard(callback.message, 'ls', 'back'))
+    if cb_data == 'back':
+        await callback.message.edit_text(MANAGEMENT, reply_markup=MANAGEMENT_KEYBOARD)
 
 
 @dp.message(commands={'m_add_group'}, chat_type='group')
